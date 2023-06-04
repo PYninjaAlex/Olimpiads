@@ -66,94 +66,44 @@
 
 import sys
 
-sys.stdin = open('INPUT.txt', 'r')
+sys.stdin = open('input.txt', 'r')
 data = sys.stdin.readlines()
 
-n, m, k = map(int, [data[0].split(" ")[0], data[0].split(" ")[1], data[0].split(" ")[2]])
+n, m, j = map(int, [data[0].split(" ")[0], data[0].split(" ")[1], data[0].split(" ")[2]])
 
 field = [".\n" if j == m - 1 else "." for _ in range(n) for j in range(m)]
 
 for i in data[1:]:
     coordinates = list(map(int, i.replace("\n", "").split(" ")))
-    print(coordinates)
-    print(field[coordinates[1]])
     field[coordinates[1] - 1 if coordinates[0] == 1 else m * (coordinates[0] - 1) + coordinates[1] - 1] = "*\n" if \
     coordinates[1] == m else "*"
 
-for j in range(m):
-    count = 0
-    if j == 0 and field[j] != "*":
-        if field[j + 1] == "*":
-            count += 1
-        if field[m + j] == "*":
-            count += 1
-        if field[m + j + 1] == "*":
-            count += 1
-        field[j] = f"{count}" if count > 0 else "."
-
-    elif j == m - 1 and field[j] not in "*\n":
-        if field[j - 1] == "*":
-            count += 1
-        if field[m + j] == "*":
-            count += 1
-        if field[m + j - 1] == "*":
-            count += 1
-        field[j] = f"{count}\n" if count > 0 else "."
-
-    elif field[j] not in "*\n":
-        if field[j + 1] == "*":
-            count += 1
-        if field[m + j] == "*":
-            count += 1
-        if field[m + j + 1] == "*":
-            count += 1
-        if field[j - 1] == "*":
-            count += 1
-        if field[m + j - 1] == "*":
-            count += 1
-        field[j] = f"{count}" if count > 0 else "."
-
-for i in range(1, n - 1):
+for i in range(n):
     for j in range(m):
-        count = 0
-        if j == 0 and field[(i*m) + j] != "*":
-            if field[(i - 1) * m + j + 1] == "*":
-                count += 1
-            if field[(i - 1) * m + j] == "*":
-                count += 1
-            if field[m*i + j + 1] == "*":
-                count += 1
-            if field[m * (i + 1) + j] == "*":
-                count += 1
-            if field[m * (i + 1) + j + 1] == "*":
-                count += 1
-            field[j] = f"{count}" if count > 0 else "."
+        if field[i*m + j] not in "*\n":
+            ring = ""
+            if j != m - 1:
+                ring += field[i*m + j + 1]
+            if j != 0:
+                ring += field[i*m + j - 1]
 
-        elif j == m - 1 and field[(i*m) + j] not in "*\n":
-            if field[(i - 1) * m + j - 1] == "*":
-                count += 1
-            if field[(i - 1) * m + j] == "*":
-                count += 1
-            if field[m*i + j - 1] == "*":
-                count += 1
-            if field[m * (i+1) + j] == "*":
-                count += 1
-            if field[m * (i+1) + j - 1] == "*":
-                count += 1
-            field[j] = f"{count}\n" if count > 0 else "."
+            if i != 0:
+                ring += field[(i-1) * m + j]
+                if j != 0:
+                    ring += field[(i-1) * m + j - 1]
+                if j != m - 1:
+                    ring += field[(i-1) * m + j + 1]  
 
-        elif field[(i*m) + j] not in "*\n":
-            if field[i*m + j + 1] == "*":
-                count += 1
-            if field[(i-1)*m + j] == "*":
-                count += 1
-            if field[m + j + 1] == "*":
-                count += 1
-            if field[j - 1] == "*":
-                count += 1
-            if field[m + j - 1] == "*":
-                count += 1
-            field[j] = f"{count}" if count > 0 else "."
+            if i != n - 1:
+                ring += field[(i+1) * m + j]
+                if j != 0:
+                    ring += field[(i+1) * m + j - 1]
+                if j != m - 1:
+                    ring += field[(i+1) * m + j + 1]
+            count = ring.count("*")    
+            field[i*m + j] = f"{count}" if count > 0 else "."
+    field[i*m + m - 1] += "\n"     
 
-# print(f"{data}\n{n} {m} {k}")
-print("".join(field))
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("".join(field))
+    
