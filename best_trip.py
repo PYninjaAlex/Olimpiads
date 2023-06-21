@@ -1,9 +1,7 @@
 def main():
     n, m = map(int, input().split())
-    output = 0
     i = 0
     j = 0
-    start = 0
     field = [list(map(int, input().split())) for _ in range(n)]
     new_field = [[field[0][0]]]
     for i in range(1, m):
