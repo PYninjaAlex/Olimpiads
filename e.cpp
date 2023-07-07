@@ -8,4 +8,5 @@ int main() {
     string res;
     int n;
     cin >> n;
+    return 1;
 }
