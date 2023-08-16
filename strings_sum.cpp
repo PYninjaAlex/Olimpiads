@@ -12,14 +12,14 @@ string strings_sum(string str1, string str2) {
   if (str1_size > str2_size) {
     for (int i = 0; i < (str1_size - str2_size); ++i) {
       str2.insert(0, "0");
-      ++str2_size;
     }
   } else {
     for (int i = 0; i < (str2_size - str1_size); ++i) {
       str1.insert(0, "0");
-      ++str1_size;
     }
   }
+  str1_size = str1.size();
+  str2_size = str2.size();
   for (int i = str1_size - 1; i >= 0; --i) {
     int var = (int)(str1[i] - '0') + (int)(str2[i] - '0') + p;
     if (var > 9) {
