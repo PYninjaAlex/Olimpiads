@@ -21,8 +21,29 @@ void dfs(int from, int to) {
   }
 }
 
+void is_graph_cycle() {
+  if (cycle_graph) {
+    cout << "It's cycle graph!"
+         << "\n";
+  } else {
+    cout << "It's not cycle graph!"
+         << "\n";
+  }
+}
+
+void is_graph_connected() {
+  for (bool a : visited) {
+    if (!a) {
+      cout << "It's not connected graph!";
+      return;
+    }
+  }
+  cout << "It's connected graph!";
+}
+
 int main() {
   // cycle graph test
+
   // A[0].push_back(1);
   // A[0].push_back(2);
   // A[1].push_back(0);
@@ -38,21 +59,8 @@ int main() {
   A[3].push_back(4);
 
   dfs(0, 0);
+  is_graph_cycle();
+  is_graph_connected();
 
-  if (cycle_graph) {
-    cout << "It's cycle graph!"
-         << "\n";
-  } else {
-    cout << "It's not cycle graph!"
-         << "\n";
-  }
-
-  for (bool a : visited) {
-    if (!a) {
-      cout << "It's not connected graph!";
-      return 0;
-    }
-  }
-  cout << "It's connected graph!";
   return 0;
 }
