@@ -6,41 +6,37 @@ using namespace std;
 int main() {
   int n;
   cin >> n;
-  vector<int> A(n);
-  vector<int> m;
-  int result = 0;
+  vector<int> v(n);
 
   for (int i = 0; i < n; ++i) {
-    cin >> A[i];
+    cin >> v[i];
   }
 
-  for (int i = 0; i < n - 1; ++i) {
-    if (A[i] > 0) {
-      result += A[i];
-      m.push_back(i + 1);
-    } else if (A[i + 1] > 0) {
-      result += A[i + 1];
-      m.push_back(i + 2);
-      ++i;
+  vector<int> m{0, v[0]};
+
+  for (int j = 1; j < n; ++j) {
+    m.push_back(max(m[j], m[j - 1]) + v[j]);
+  }
+
+  int size_m = m.size();
+
+  cout << m[size_m - 1] << "\n";
+  int i = size_m - 1;
+  vector<int> right_way;
+  right_way.push_back(i);
+
+  do {
+    if (m[i - 1] > m[i - 2]) {
+      right_way.insert(right_way.begin(), i - 1);
+      --i;
+    } else if (i != 2) {
+      right_way.insert(right_way.begin(), i - 2);
+      i -= 2;
     } else {
-      if (A[i] > A[i + 1]) {
-        result += A[i];
-        m.push_back(i + 1);
-      } else {
-        result += A[i + 1];
-        m.push_back(i + 2);
-        ++i;
-      }
+      i -= 2;
     }
+  } while (i > 1);
+  for (int k : right_way) {
+    cout << k << " ";
   }
-
-  if (m[m.size() - 1] != n) {
-    m.push_back(n);
-    result += A[n - 1];
-  }
-  cout << result << "\n";
-  for (int u : m) {
-    cout << u << " ";
-  }
-  return 0;
 }
