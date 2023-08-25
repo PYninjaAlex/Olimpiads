@@ -19,6 +19,10 @@ int main() {
   sort(X.begin(), X.end());
   vector<int> m{0, S[X[0]]};
 
+  if (n == 1) {
+    cout << S[X[0]];
+    return 0;
+  }
   for (int i = 2; i <= n; ++i) {
     m.push_back(min(m[i - 2], m[i - 1]) + S[X[i - 1]]);
   }
