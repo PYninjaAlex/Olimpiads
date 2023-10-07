@@ -108,10 +108,64 @@ void task_8() {
   }
 }
 
+void task_9() {
+  for (int l = 0; l < n; ++l) {
+    for (int j = 0; j <= l; ++j) {
+      int i = l - j;
+      M[j][i] = k;
+      ++k;
+    }
+  }
+}
+
+void task_10() {
+  for (int l = 0; l < n; ++l) {
+    for (int j = 0; j < n - l; ++j) {
+      int i = n - 1 - l - j;
+      M[j][i] = k;
+      ++k;
+    }
+  }
+}
+
+void task_11() {
+  for (int l = 0; l < n; ++l) {
+    for (int j = 0; j <= l; ++j) {
+      int i = l - j;
+      M[j][i] = k;
+      ++k;
+    }
+  }
+  for (int l = n; l < n * 2; ++l) {
+    for (int j = l - n + 1; j < n; ++j) {
+      int i = l - j;
+      M[j][i] = k;
+      ++k;
+    }
+  }
+}
+
+void task_12() {
+  for (int l = 0; l < n; ++l) {
+    for (int j = l; j >= 0; --j) {
+      int i = l - j;
+      M[n - j - 1][i] = k;
+      ++k;
+    }
+  }
+  for (int l = n; l < n * 2; ++l) {
+    for (int j = l - n + 1; j < n; ++j) {
+      int i = l - j;
+      M[n - j - 1][i] = k;
+      ++k;
+    }
+  }
+}
+
 int main() {
   cin >> n;
   matrix_creator();
-  task_8();
+  task_12();
   print_matrix();
   return 0;
 }
